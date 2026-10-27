@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Global Mission Workbench · Wingman Lite</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <aside class="nav">
+    <div class="brand">
+      <div class="brand-mark">GMW</div>
+      <div class="brand-sub">Wingman Lite</div>
+    </div>
+    <div class="nav-group">Mission</div>
+    <a class="nav-item active" href="#">Home</a>
+    <a class="nav-item muted" href="#">Portfolio</a>
+    <a class="nav-item muted" href="#">Opportunities</a>
+    <a class="nav-item muted" href="#">Engineering</a>
+    <div class="nav-group">Personal</div>
+    <a class="nav-item" href="#" data-open-wingman>AI Wingman</a>
+    <div class="nav-foot">Powered by RSO · <span id="version">dev</span></div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <div>
+        <h1>GLOBAL MISSION WORKBENCH</h1>
+        <p class="tag">From sustainment challenges to fielded capabilities</p>
+      </div>
+      <form class="search" id="search-form">
+        <input id="search" placeholder="Ask Wingman about parts, projects, requirements…" autocomplete="off">
+      </form>
+      <button class="wing-btn" data-open-wingman>✦ Ask your Wingman</button>
+    </header>
+
+    <div class="banner" id="mode-banner" hidden></div>
+
+    <section class="kpis">
+      <div class="kpi"><b>248</b><span>Active Opportunities</span></div>
+      <div class="kpi"><b>72</b><span>In Engineering</span></div>
+      <div class="kpi"><b>58</b><span>Ready to Source</span></div>
+      <div class="kpi"><b>96</b><span>In Execution</span></div>
+      <div class="kpi"><b>184</b><span>Fielded Solutions</span></div>
+    </section>
+    <p class="note">Sample figures. This build exists to exercise the DRAGON pipeline and the Wingman assistant.</p>
+
+    <section class="hero">
+      <h2>RIGHT SOLUTION.<br>RIGHT LOCATION.<br>MISSION READY.</h2>
+      <p>Connect sustainment demand to U.S. organic, Five Eyes, forward and authorized
+        industrial capabilities, executing closer to the point of need.</p>
+      <div class="chips">
+        <button class="chip" data-prompt="Summarize what a Mission Technical Package should contain.">What goes in a Mission Technical Package?</button>
+        <button class="chip" data-prompt="Explain the difference between organic depot repair and sourcing from the Defense Industrial Base.">Organic vs. DIB sourcing</button>
+        <button class="chip" data-prompt="What questions should I ask before qualifying a new source for an aircraft part?">Qualifying a new source</button>
+      </div>
+    </section>
+  </main>
+
+  <aside class="wingman" id="wingman" aria-hidden="true">
+    <div class="wm-head">
+      <div>
+        <div class="wm-title">✦ Wingman</div>
+        <select id="model" aria-label="Model"></select>
+      </div>
+      <div class="wm-actions">
+        <button class="ghost" id="clear" title="New conversation">New</button>
+        <button class="ghost" id="close" title="Close">✕</button>
+      </div>
+    </div>
+    <div class="wm-log" id="log">
+      <div class="msg assistant">Hi, I'm Wingman. Pick a model above and ask me anything about sustainment work.</div>
+    </div>
+    <form class="wm-input" id="chat-form">
+      <textarea id="prompt" rows="2" placeholder="Message Wingman… (Enter to send)"></textarea>
+      <button id="send" type="submit">Send</button>
+    </form>
+    <div class="wm-foot">AI responses can be wrong. Don't enter CUI or classified data unless this environment is authorized for it.</div>
+  </aside>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

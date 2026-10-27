@@ -1,0 +1,45 @@
+replicaCount: 1
+
+image:
+  repository: registry.example.mil/rso/wingman-lite   # DRAGON normally overrides this
+  tag: ""                                              # defaults to .Chart.AppVersion
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  host: wingman-lite.dev.example.mil
+  tls: []
+
+# Non-secret settings.
+env:
+  DATABRICKS_HOST: ""              # e.g. https://adb-1234567890123456.7.azuredatabricks.net
+  WINGMAN_DEFAULT_MODEL: gpt-5-6-terra
+  WINGMAN_MODELS: "gpt-5-6-terra,gpt-5-6-luna,gpt-5-4,gemini-3-8-flash,gemini-3-7-flash,gemini-3-6-flash,gemini-3-5-flash,gemini-3-5-flash-lite,grok-4-6"
+  WINGMAN_MOCK: "false"            # "true" = canned replies, no model calls
+
+# Name of an existing Secret holding DATABRICKS_TOKEN, or
+# DATABRICKS_CLIENT_ID + DATABRICKS_CLIENT_SECRET (service principal OAuth).
+# Create it out of band; credentials are never stored in this chart.
+existingSecret: wingman-databricks
+
+resources:
+  requests: { cpu: 50m, memory: 128Mi }
+  limits: { cpu: 500m, memory: 256Mi }
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1001
+  seccompProfile: { type: RuntimeDefault }
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities: { drop: [ALL] }

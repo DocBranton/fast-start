@@ -1,0 +1,6 @@
+apiVersion: v2
+name: wingman-lite
+description: Minimal Global Mission Workbench shell with the Wingman AI assistant
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

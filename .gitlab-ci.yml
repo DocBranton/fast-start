@@ -1,0 +1,18 @@
+# DRAGON pipeline test: build + scan + sign the image, create the Helm chart,
+# and auto-deploy to dev (Quick Start Guide, Scenario 2).
+include:
+  - project: promotion/tekton-promotion-gitlab
+    file: dragon.yml
+
+variables:
+  CONTAINER_BUILD: "true"
+  CONTAINER_DEPLOY: "true"
+  DEPLOY_DEV: "true"
+
+  # Next steps once dev works (uncomment to exercise more of the promotion path):
+  # DEPLOY_TEST: "true"
+  # DEPLOY_STAGING: "true"      # manual "Play" button
+  # DEPLOY_PRODUCTION: "true"   # manual, needs a SemVer tag such as v0.1.0
+
+  # For a pipeline smoke test with no model access, start the app in mock mode
+  # by setting WINGMAN_MOCK=true in chart/values.yaml (env section).
