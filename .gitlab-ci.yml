@@ -1,18 +1,40 @@
-# DRAGON pipeline test: build + scan + sign the image, create the Helm chart,
+# DRAGON pipeline test: build + scan + sign the image, package the Helm chart,
 # and auto-deploy to dev (Quick Start Guide, Scenario 2).
 include:
   - project: promotion/tekton-promotion-gitlab
-    file: dragon.yml
+    ref: main          # pin to a release tag (e.g. v2.1.29) once the first run works
+    file: dragon.yml   # variable-based entry point; see note below if this fails
 
 variables:
+  # Workflows (Quick Start Guide, Scenario 2). Values must be exactly "true".
   CONTAINER_BUILD: "true"
   CONTAINER_DEPLOY: "true"
   DEPLOY_DEV: "true"
 
-  # Next steps once dev works (uncomment to exercise more of the promotion path):
+  # Build inputs (DRAGON defaults shown explicitly so the test is unambiguous).
+  DOCKERFILE_PATH: "Dockerfile"
+  KANIKO_CONTEXT: "."
+
+  # DRAGON packages the chart from HELM_CHART_DIR (default "charts").
+  # This repo keeps its chart in chart/, so point DRAGON at it.
+  HELM_CHART_DIR: "chart"
+
+  # Uncomment for verbose DRAGON logs on the first run.
+  # DRAGON_DEBUG: "true"
+
+  # Next steps once dev works:
   # DEPLOY_TEST: "true"
   # DEPLOY_STAGING: "true"      # manual "Play" button
   # DEPLOY_PRODUCTION: "true"   # manual, needs a SemVer tag such as v0.1.0
 
-  # For a pipeline smoke test with no model access, start the app in mock mode
-  # by setting WINGMAN_MOCK=true in chart/values.yaml (env section).
+# If the include fails or no jobs appear: the AGENTS.md for tekton-promotion-gitlab
+# describes dragon.yml as a legacy compatibility file and routes/*.yml as the entry
+# points. The equivalent route-based include is:
+#
+# include:
+#   - project: promotion/tekton-promotion-gitlab
+#     ref: main
+#     file: routes/dragon-full.yml
+#
+# For a pipeline smoke test with no model access, set WINGMAN_MOCK: "true" in
+# chart/values.yaml (env section).

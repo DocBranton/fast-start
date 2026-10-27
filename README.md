@@ -72,9 +72,13 @@ Before the first pipeline run:
 3. **Host.** Set `env.DATABRICKS_HOST` and, if you need external access, `ingress` in
    `chart/values.yaml`.
 4. **Network.** The pod needs egress to the Databricks workspace host.
-5. **Chart.** The guide says DRAGON creates the Helm chart. If it generates its own,
-   delete `chart/` and pass the same env vars and Secret through DRAGON's mechanism.
-   If it uses the repo's chart, run `helm lint chart` first (not yet linted).
+5. **Chart.** DRAGON packages the chart found at `HELM_CHART_DIR`, which is set to
+   `chart` in `.gitlab-ci.yml`. Run `helm lint chart` before the first push (not yet linted).
+6. **Entry point.** The include uses `dragon.yml` (variable-based, per the Quick Start
+   Guide). The tekton-promotion-gitlab AGENTS.md calls that a legacy compatibility file
+   and points users at `routes/*.yml`; if the include fails or no jobs appear, switch
+   to `routes/dragon-full.yml` (commented in `.gitlab-ci.yml`). Pin `ref` to a release
+   tag once it works.
 
 To exercise more of the promotion path, uncomment `DEPLOY_TEST`, `DEPLOY_STAGING` and
 `DEPLOY_PRODUCTION`, and push a SemVer tag (`git tag v0.1.0 && git push origin v0.1.0`).
